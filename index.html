@@ -16,9 +16,52 @@
       </p>
     </section>
     <script src="src/thermostat.js"></script>
+    <script src="src/style.css"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
       crossorigin="anonymous">
     </script>
+    <script>
+    $(document).ready(function() {
+  var thermostat = new Thermostat()
+  updateTemperature()
+  
+  $('#temperature-up').click(function() {
+    thermostat.up()
+    updateTemperature()
+  })
+  
+  $('#temperature-down').click(function() {
+    thermostat.down()
+    updateTemperature()
+  })
+  
+  $('#temperature-reset').click(function() {
+    thermostat.resetTemperature()
+    updateTemperature()
+  })
+  
+  $('#powersaving-on').click(function() {
+    thermostat.switchPowerSavingModeOn()
+    $('#power-saving-status').text('on')
+  })
+  
+  $('#powersaving-off').click(function() {
+    thermostat.switchPowerSavingModeOff()
+    $('#power-saving-status').text('off')
+  })
+  
+  function updateTemperature() {
+    $('#temperature').text(thermostat.temperature)
+    if(thermostat.energyUsage() === 'low-usage') {
+      $('#temperature').css('color', 'green')
+    } else if(thermostat.energyUsage() === 'medium-usage') {
+      $('#temperature').css('color', 'black')
+    } else {
+      $('#temperature').css('color', 'red')
+    }
+  }  
+})
+</script>
   </body>
 </html>
